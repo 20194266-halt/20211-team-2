@@ -16,8 +16,19 @@ const Home = () => {
       setcategories(response.data);
     });
   }, [categories]);
+  const [users, setusers] = useState([]);
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+  const loadUsers = async () => {
+    axios.get(`${API_URL}/api/admin/users`).then((response) => {
+      setusers(response.data);
+    });
+  };
   let day = new Date();
   let num = articles.length;
+  let user = users.length;
   let hide = articles.filter((x) => x.status == "An").length;
   let show = num - hide;
   return (
@@ -34,7 +45,7 @@ const Home = () => {
                       Số thành viên đăng ký nhận tin tức
                     </div>
                     <div className="h5 mb-0 font-weight-bold text-gray-800">
-                      <em>Đang cập nhật</em>
+                      <em>{user}</em>
                     </div>
                   </div>
                   <div className="col-auto">

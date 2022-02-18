@@ -3,7 +3,7 @@ const adminRoutes = express.Router();
 const CategoriesModel = require("../models/Category");
 const ArticleModel = require("../models/Article");
 const UrlModel = require("../models/Url");
-
+const UserModel = require('../models/User')
 // Categories API
 adminRoutes.post("/categories", async (req, res) => {
   const category = req.body.category;
@@ -163,4 +163,13 @@ adminRoutes.delete("/deleteUrl/:id", async (req, res) => {
   res.send("delete");
 });
 
+//user api
+adminRoutes.get("/users", async (req, res) => {
+  try {
+    const user = await UserModel.find();
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
 module.exports = adminRoutes;
